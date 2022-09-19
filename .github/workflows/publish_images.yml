@@ -28,8 +28,11 @@ jobs:
           elif [[ $GITHUB_REF == refs/pull/* ]]; then
             VERSION=pr-${{ github.event.number }}
           else
-            echo "Unkown refs $GITHUB_REF"
+            echo "Unknown refs $GITHUB_REF"
             exit 1
+          fi
+          if [[ "$VERSION" == "main" || "$VERSION" == "master" ]]; then 
+            VERSION=latest
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}"
           echo ::set-output name=version::${VERSION}
